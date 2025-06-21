@@ -1,0 +1,75 @@
+# name: Auto Random Commit
+
+# on:
+#   schedule:
+#     - cron: "*/30 * * * *"  # Every 30 minutes
+
+# jobs:
+#   auto-commit:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+
+#       - name: Set up Git config
+#         run: |
+#           git config user.name "ujjwal2110"
+#           git config user.email "dlujjwal2120@gmail.com"
+
+#       - name: Add random commit
+#         env:
+#           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+#         run: |
+#           HOUR=$(date -u +"%H")
+#           NEPALI_HOUR=$(( (HOUR + 5 + ((date -u +%M) >= 45 ? 1 : 0)) % 24 ))
+
+#           if [ $NEPALI_HOUR -ge 6 ] && [ $NEPALI_HOUR -le 23 ]; then
+#             if [ $(( RANDOM % 2 )) -eq 0 ]; then
+#               echo "$(date) Random update" >> random.txt
+#               git add random.txt
+
+#               MESSAGES=("🌱 Sprinkled some freshness!" "📌 Random activity update." "✨ Keeping things alive!" "🌀 Time twist commit." "📅 Just a routine randomness." "🧠 Brainstorm saved." "🔥 Fired up the engine." "🚀 Little push to the cosmos." "💡 Lightbulb commit moment." "🔄 Keeping it moving!")
+#               SELECTED_MESSAGE=${MESSAGES[RANDOM % 10]}
+
+#               git commit -m "$SELECTED_MESSAGE"
+#               git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/ujjwal2110/cool-activity.git
+#             else
+#               echo "⏳ Skipping this time (random block)."
+#             fi
+#           else
+#             echo "🌙 Out of Nepali commit hours (6AM–11PM)."
+#           fi
+
+
+name: Auto Commit Every Minute (Testing)
+
+on:
+  schedule:
+    - cron: "* * * * *"  # Every minute
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Git config
+        run: |
+          git config user.name "ujjwal2110"
+          git config user.email "dlujjwal2120@gmail.com"
+
+      - name: Add and commit update
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          echo "$(date) Test commit update" >> random.txt
+          git add random.txt
+
+          MESSAGES=("🧪 Testing commit" "🔁 Looping commit" "✅ One more test" "📤 Test push again")
+          SELECTED_MESSAGE=${MESSAGES[RANDOM % ${#MESSAGES[@]}]}
+
+          git commit -m "$SELECTED_MESSAGE"
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/ujjwal2110/cool-activity.git
