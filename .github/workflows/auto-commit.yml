@@ -45,6 +45,7 @@
 name: Auto Commit Every Minute (Testing)
 
 on:
+  workflow_dispatch:  # Manual run button
   schedule:
     - cron: "* * * * *"  # Every minute
 
